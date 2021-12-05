@@ -2,14 +2,14 @@ import java.util.Scanner;
 
 class Password {
     protected int pin = 23072001;
-    protected int norek = 90006755;
+    protected int nomorRekening = 90006755;
     
     public void setPin(int password) {
         this.pin = password;
     }
 
     public void setNorek(int rekening) {
-        this.norek = rekening;
+        this.nomorRekening = rekening;
     }
     
     public int getPin() {
@@ -17,6 +17,6 @@ class Password {
     } 
 
     public int getNorek() {
-        return norek;
+        return nomorRekening;
     } 
 }

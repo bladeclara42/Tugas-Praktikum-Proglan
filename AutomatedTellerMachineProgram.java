@@ -4,10 +4,10 @@ import java.text.*;
 import java.util.*;
  
 public class AutomatedTellerMachineProgram extends Password{
-		Password pass = new Password();
-		Login log = new Login();
-		Saldo2 Sal = new Saldo2();
-		int pil;
+		Password password = new Password();
+		Login login = new Login();
+		MinimalSaldo minSaldo = new MinimalSaldo();
+		int pilihan;
  
     public static void main(String[] args){
         AutomatedTellerMachineProgram program = new AutomatedTellerMachineProgram();
@@ -16,11 +16,11 @@ public class AutomatedTellerMachineProgram extends Password{
 
     }
     public void initSaldo(double saldo) {
-        Sal.setSaldo(saldo);
+        minSaldo.setSaldo(saldo);
     }
     	
     public void menu() {
-	int pil;	
+	    int pilihan;	
 
         System.out.println("=========================================================");
         System.out.print("\t 	 ATM BANK RAKYAT PATI");
@@ -29,8 +29,8 @@ public class AutomatedTellerMachineProgram extends Password{
         System.out.print("|");
         System.out.print("\t           Pilih Transaksi                   	|");
         System.out.println();
-	System.out.print("|							|");
-	System.out.println();
+	    System.out.print("|							|");
+	    System.out.println();
         System.out.print("|");
         System.out.print("\t 1. Cek Saldo       	  2. Transfer        	|");
         System.out.println();
@@ -40,13 +40,13 @@ public class AutomatedTellerMachineProgram extends Password{
         System.out.print("|");
         System.out.println("\t 5. Tambah Saldo	  6. Keluar        	|");
         System.out.println("=========================================================");
-	System.out.println();
-	System.out.println("Masukkan Pilihan Anda :");
-	Scanner input = new Scanner(System.in);
-	pil = input.nextInt();
-	System.out.println();
+	    System.out.println();
+	    System.out.println("Masukkan Pilihan Anda :");
+	    Scanner input = new Scanner(System.in);
+	    pilihan = input.nextInt();
+	    System.out.println();
 	
-        switch (pil) {
+        switch (pilihan) {
             case 1:
                 lihatSaldo();
                 break;
@@ -84,7 +84,7 @@ public class AutomatedTellerMachineProgram extends Password{
 		System.out.println("Masukkan pin kembali : ");
 		pin = scan.nextInt();
 		System.out.println();
-		if (i != angka && pass.getPin() == pin ) {
+		if (i != angka && password.getPin() == pin ) {
             			menu();
 			}else{
 				System.out.println("Atm Terblokir, Silahkan membuka rekening kembali");
@@ -97,11 +97,11 @@ public class AutomatedTellerMachineProgram extends Password{
 	int PIN;
 
 		tambahNasabah();
-		log.login();
+		login.login();
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Masukkan pin : ");
 		PIN = scan.nextInt();
-        if (pass.getPin() == PIN ) {
+        if (password.getPin() == PIN ) {
             menu();
         } else {	
              	System.out.println();
@@ -118,7 +118,7 @@ public class AutomatedTellerMachineProgram extends Password{
 	int umur;
 	double nomerKTP;
 		System.out.println();
-		log.login();
+		login.login();
 		System.out.println("Silahkan melakukan pembukaan rekening terlebih dahulu ");
 		Scanner input = new Scanner(System.in);
 		System.out.println();
@@ -163,14 +163,14 @@ public class AutomatedTellerMachineProgram extends Password{
         System.out.println("=========================================================");
         System.out.println("\t                      Saldo                     ");
         System.out.println("=========================================================");
-        System.out.println("Sisa Saldo yang Anda miliki adalah sebesar Rp " + Sal.getSaldo());
+        System.out.println("Sisa Saldo yang Anda miliki adalah sebesar Rp " + minSaldo.getSaldo());
         transaksiLagi();
 	
     }
  
     public void transfer() {
         double rekening;
-        double nom;
+        double nominal;
         System.out.println("=========================================================");
         System.out.print("|");
         System.out.print("\t                 Transfer                       |");
@@ -182,29 +182,29 @@ public class AutomatedTellerMachineProgram extends Password{
 	rekening = input.nextDouble();
 	System.out.println();
 	System.out.println("Masukkan Nominal yang ingin di Transfer : ");
-	nom = input.nextInt();
+	nominal = input.nextInt();
         System.out.println();
 
-        transferNominal(nom,rekening);
+        transferNominal(nominal,rekening);
     }
  
-    public void transferNominal(double nom, double rekening) {
-        double saldo = Sal.getSaldo();
-		if (Sal.getSaldo() < 50000) {
+    public void transferNominal(double nominal, double rekening) {
+        double saldo = minSaldo.getSaldo();
+		if (minSaldo.getSaldo() < 50000) {
             System.out.println("\tMaaf Saldo Anda tidak mencukupi");
 		transaksiLagi();
-        } else if (nom < 50000) {
+        } else if (nominal < 50000) {
 	    System.out.println("\tMaaf minimal transfer yaitu Rp 50000");
 		transaksiLagi();
 	} else {
-            saldo -= nom;
-            if (saldo < Sal.minSaldo()) {
+            saldo -= nominal;
+            if (saldo < minSaldo.minSaldo()) {
                 System.out.println("\tMaaf, jumlah transfer terlalu besar");
                 System.out.println("\t    Sisa saldo Anda tidak mencukupi");
 		transaksiLagi();
             } else {
-                Sal.setSaldo(saldo);
-                System.out.println("Anda telah berhasil melakukan transfer sebesar Rp " + nom + "  Ke nomor rekening " + rekening);
+                minSaldo.setSaldo(saldo);
+                System.out.println("Anda telah berhasil melakukan transfer sebesar Rp " + nominal + "  Ke nomor rekening " + rekening);
                 System.out.println("\t       Sisa Saldo adalah Rp " + saldo);
             }
             transaksiLagi();
@@ -215,7 +215,7 @@ public class AutomatedTellerMachineProgram extends Password{
 
     public void tarik() {
         double penarikan;
-	int pil;
+	int pilihan;
 	double total;
  
         System.out.println("=========================================================");
@@ -240,9 +240,9 @@ public class AutomatedTellerMachineProgram extends Password{
         System.out.print("\t         Masukan pilihan Anda : ");
 	System.out.println();
         Scanner input = new Scanner(System.in);
-	pil = input.nextInt();
+        pilihan = input.nextInt();
         System.out.println("=========================================================");
-        switch (pil) {
+        switch (pilihan) {
             case 1:
                 tarikNominal(100000);
                 break;
@@ -274,8 +274,8 @@ public class AutomatedTellerMachineProgram extends Password{
     }
  
     public void tarikNominal(double nominal) {
-        double saldo = Sal.getSaldo();
-        if (Sal.getSaldo() < 50000) {
+        double saldo = minSaldo.getSaldo();
+        if (minSaldo.getSaldo() < 50000) {
             System.out.println("\tMaaf Saldo Anda tidak mencukupi.");
 	    transaksiLagi();
         } else if (nominal < 50000) {
@@ -283,13 +283,13 @@ public class AutomatedTellerMachineProgram extends Password{
 	    transaksiLagi();
         } else {
 	    saldo -= nominal;
-            if (saldo < Sal.minSaldo()) {
+            if (saldo < minSaldo.minSaldo()) {
 		System.out.println();
                 System.out.println("\tMaaf, jumlah penarikan terlalu besar");
                 System.out.println("\t    Sisa saldo tidak mencukupi");
 		transaksiLagi();
             } else {
-                Sal.setSaldo(saldo);
+                minSaldo.setSaldo(saldo);
 		System.out.println();
                 System.out.println("Anda telah berhasil melakukan penarikan sebesar Rp " + nominal);
                 System.out.println("\t       Sisa Saldo adalah Rp " + saldo);
@@ -303,8 +303,8 @@ public class AutomatedTellerMachineProgram extends Password{
         String warn;
 	int kode;
 	int jumlah;
-	int pil;
-        double saldo = Sal.getSaldo();
+	int pilihan;
+        double saldo = minSaldo.getSaldo();
 	Scanner scan = new Scanner(System.in);
         System.out.println("=========================================================");
         System.out.print("|");
@@ -322,8 +322,8 @@ public class AutomatedTellerMachineProgram extends Password{
         System.out.println("=========================================================");
         System.out.print("\t         Masukan pilihan Anda : ");
 	System.out.println();
-        pil = scan.nextInt();
-        switch (pil) {
+    pilihan = scan.nextInt();
+        switch (pilihan) {
 	case 1:
                 System.out.println("=========================================================");
                 System.out.print("|");
@@ -346,17 +346,17 @@ public class AutomatedTellerMachineProgram extends Password{
                 warn = listrik.nextLine();
 		System.out.println();
                 if (warn.equalsIgnoreCase("y")) {
-                    if (Sal.getSaldo() < 50000) {
+                    if (minSaldo.getSaldo() < 50000) {
                         System.out.println("\tMaaf Saldo Anda tidak mencukupi.");
 			transaksiLagi();
                     } else {
                         saldo -= jumlah;
-                        if (saldo < Sal.minSaldo()) {
+                        if (saldo < minSaldo.minSaldo()) {
                             System.out.println("\tMaaf, jumlah pembayaran terlalu besar");
                             System.out.println("\t    Sisa saldo tidak mencukupi");
 			    transaksiLagi();
                         } else {
-                            Sal.setSaldo(saldo);
+                            minSaldo.setSaldo(saldo);
                             System.out.println("Anda telah berhasil melakukan pembayaran sebesar Rp "+ jumlah);
                             System.out.println("\t       Sisa Saldo adalah Rp " + saldo);
                         }
@@ -391,17 +391,17 @@ public class AutomatedTellerMachineProgram extends Password{
 		warn = telepon.nextLine();
 		System.out.println();
                 if (warn.equalsIgnoreCase("y")) {
-                    if (Sal.getSaldo() < 50000) {
+                    if (minSaldo.getSaldo() < 50000) {
                         System.out.println("\tMaaf Saldo Anda tidak mencukupi.");
 			transaksiLagi();
                     } else {
                         saldo -= jumlah;
-                        if (saldo <Sal.minSaldo()) {
+                        if (saldo <minSaldo.minSaldo()) {
                             System.out.println("\tMaaf, jumlah pembayaran terlalu besar");
                             System.out.println("\t    Sisa saldo tidak mencukupi");
 				transaksiLagi();
                         } else {
-                            Sal.setSaldo(saldo);
+                            minSaldo.setSaldo(saldo);
                             System.out.println("Anda telah berhasil melakukan pembayaran sebesar Rp "+ jumlah);
                             System.out.println("\t       Sisa Saldo adalah :" + saldo);
                         }
@@ -436,13 +436,12 @@ public class AutomatedTellerMachineProgram extends Password{
   }
 	
    public void tambahNominal(double nominal) {
-        double saldo = Sal.getSaldo();
+        double saldo = minSaldo.getSaldo();
        	if (nominal < 50000) {
            	System.out.println("\tMaaf minimal penambahan saldo yaitu Rp 50000");
 		transaksiLagi();
         } else {
             	saldo += nominal;
-	    	Sal.setSaldo(saldo);
 		System.out.println();
                 System.out.println("Anda telah berhasil melakukan penambahan sebesar Rp " + nominal);
                 System.out.println("\t       Saldo Sekarang adalah Rp " + saldo);
@@ -454,9 +453,9 @@ public class AutomatedTellerMachineProgram extends Password{
  
     public void transaksiLagi() {
         String warn;
-		transaksiLagi trans = new transaksiLagi();
+		transaksiLagi transaksi = new transaksiLagi();
         Scanner scan = new Scanner(System.in);
-	trans.transaksiLagi();
+        transaksi.transaksiLagi();
 	warn = scan.nextLine();
         System.out.println();
         if (warn.equalsIgnoreCase("y")) {
