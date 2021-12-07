@@ -192,25 +192,20 @@ public class AutomatedTellerMachineProgram extends Password{
         double saldo = minSaldo.getSaldo();
 		if (minSaldo.getSaldo() < 50000) {
             System.out.println("\tMaaf Saldo Anda tidak mencukupi");
-		transaksiLagi();
         } else if (nominal < 50000) {
 	    System.out.println("\tMaaf minimal transfer yaitu Rp 50000");
-		transaksiLagi();
 	} else {
             saldo -= nominal;
             if (saldo < minSaldo.minSaldo()) {
                 System.out.println("\tMaaf, jumlah transfer terlalu besar");
                 System.out.println("\t    Sisa saldo Anda tidak mencukupi");
-		transaksiLagi();
             } else {
                 minSaldo.setSaldo(saldo);
                 System.out.println("Anda telah berhasil melakukan transfer sebesar Rp " + nominal + "  Ke nomor rekening " + rekening);
                 System.out.println("\t       Sisa Saldo adalah Rp " + saldo);
             }
-            transaksiLagi();
-	    
-		
 		}
+        transaksiLagi();
 	}
 
     public void tarik() {
